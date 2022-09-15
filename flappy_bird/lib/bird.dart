@@ -19,4 +19,12 @@ class Bird extends SpriteAnimationComponent with HasGameRef {
     _idleAnimation = spriteSheet.createAnimation(
         row: 0, stepTime: _animationSpeed, from: 0, to: 2);
   }
+
+  @override
+  void update(double dt) {
+    super.update(dt);
+    anchor = Anchor.center;
+    y = gameRef.size.y * .5;
+    x = gameRef.size.x * .5;
+  }
 }
