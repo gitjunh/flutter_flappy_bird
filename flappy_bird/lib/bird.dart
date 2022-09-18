@@ -1,9 +1,19 @@
 import 'package:flame/components.dart';
+import 'package:flame/flame.dart';
 import 'package:flame/sprite.dart';
+import 'package:flame_audio/flame_audio.dart';
+
+final double BIRD_W = 52;
+final double BIRD_H = 36.7;
+final double GRAVITY = 1200;
 
 class Bird extends SpriteAnimationComponent with HasGameRef {
   final double _animationSpeed = .15;
   late final SpriteAnimation _idleAnimation;
+
+  double timepassed = .0;
+  double speedY = .0;
+
   Bird() : super(size: Vector2(52, 36.7));
 
   @override
@@ -23,8 +33,21 @@ class Bird extends SpriteAnimationComponent with HasGameRef {
   @override
   void update(double dt) {
     super.update(dt);
+    // timepassed += dt;
+    speedY += GRAVITY * dt;
     anchor = Anchor.center;
-    y = gameRef.size.y * .5;
+    // y = (GRAVITY * timepassed * timepassed) * 0.5;
+    y += (speedY * dt);
     x = gameRef.size.x * .5;
+    // print(dt);
+  }
+
+  void onTap() {
+    // print("user tap!!");
+    // this.y = .0;
+    // this.timepassed = .0;
+    this.speedY = -(GRAVITY * .4);
+    // Flame.audio.pay("buble_pop.mp3");
+    FlameAudio.play("bubble_pop.mp3", volume: .5);
   }
 }
